@@ -1,23 +1,30 @@
-import logo from './logo.svg';
 import './App.css';
+import ReactAudioPlayer from 'react-audio-player';
+import { useState } from 'react';
 
 function App() {
+  let [playingSoundIndex, setplayingSoundIndex] = useState(0);
+
+  let sounds = [
+    "/sounds/SuperMarioBros.mp3",
+    "/sounds/ReturnOfTheLemmingShepards.mp3",
+    "/sounds/TheCalling.wav",
+    "/sounds/TheNymphaeum.wav",
+    "/sounds/UrbanSunrise.mp3",
+    "/sounds/WhatABeautifulSunset.wav",
+  ];
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <button onClick={() => setplayingSoundIndex(playingSoundIndex + 1)}>
+      Next
+    </button>
+
+      <ReactAudioPlayer
+        src={sounds[playingSoundIndex]}
+        autoPlay="false"
+        controls
+      />
     </div>
   );
 }
