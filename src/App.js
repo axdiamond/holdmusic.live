@@ -3,8 +3,7 @@ import ReactAudioPlayer from 'react-audio-player';
 import { useState } from 'react';
 
 function App() {
-  let [playingSoundIndex, setplayingSoundIndex] = useState(0);
-
+  
   let sounds = [
     "/sounds/SuperMarioBros.mp3",
     "/sounds/ReturnOfTheLemmingShepards.mp3",
@@ -14,6 +13,11 @@ function App() {
     "/sounds/WhatABeautifulSunset.wav",
   ];
 
+  let randomStart = Math.floor(Math.random() * sounds.length - 1);
+
+  let [playingSoundIndex, setplayingSoundIndex] = useState(randomStart);
+
+
   return (
     <div className="App">
     <button onClick={() => setplayingSoundIndex(playingSoundIndex + 1)}>
@@ -22,7 +26,7 @@ function App() {
 
       <ReactAudioPlayer
         src={sounds[playingSoundIndex]}
-        autoPlay="false"
+        autoPlay
         controls
       />
     </div>
