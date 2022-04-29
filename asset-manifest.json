@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/holdmusic.live/static/css/main.fcf7cad6.css",
+    "main.js": "/holdmusic.live/static/js/main.2b8ce5a5.js",
+    "static/js/787.28cb0dcd.chunk.js": "/holdmusic.live/static/js/787.28cb0dcd.chunk.js",
+    "index.html": "/holdmusic.live/index.html",
+    "main.fcf7cad6.css.map": "/holdmusic.live/static/css/main.fcf7cad6.css.map",
+    "main.2b8ce5a5.js.map": "/holdmusic.live/static/js/main.2b8ce5a5.js.map",
+    "787.28cb0dcd.chunk.js.map": "/holdmusic.live/static/js/787.28cb0dcd.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.fcf7cad6.css",
+    "static/js/main.2b8ce5a5.js"
+  ]
+}
