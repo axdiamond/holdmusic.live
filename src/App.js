@@ -71,7 +71,7 @@ function App() {
         src={sounds[playingSoundIndex]} />
       <div>
         {/* TODO: Custom visualizer?? */}
-        <AudioVisualizer audio={audioRef} style={{ width: '25vh', height: '25vw'}} />
+        {/* <AudioVisualizer audio={audioRef} style={{ width: '25vh', height: '25vw'}} /> */}
       </div>
 
       <div>
