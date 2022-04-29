@@ -1,6 +1,6 @@
 import './App.css';
+import { useState, useRef } from 'react';
 import ReactAudioPlayer from 'react-audio-player';
-import { useState } from 'react';
 
 function App() {
   
@@ -16,21 +16,41 @@ function App() {
   let randomStart = Math.floor(Math.random() * sounds.length - 1);
 
   let [playingSoundIndex, setplayingSoundIndex] = useState(randomStart);
+  let [isPlaying, setIsPlaying] = useState(false);
+  const audioRef = useRef(null);
 
+  if (audioRef.current?.audioEl?.current) {
+    if (isPlaying) {
+      audioRef.current.audioEl.current?.play();
+    } else {
+      audioRef.current.audioEl.current?.pause();
+    }
+  }
 
   return (
     <div className="App">
-    <button onClick={() => setplayingSoundIndex(playingSoundIndex + 1)}>
-      Next
-    </button>
+      <button onClick={() => { 
+          setplayingSoundIndex(playingSoundIndex + 1);
+          setIsPlaying(true);
+        }}>
+        Shuffle
+      </button>
 
-      <ReactAudioPlayer
-        src={sounds[playingSoundIndex]}
-        autoPlay
-        controls
-      />
+      
+    <ReactAudioPlayer
+      src={sounds[playingSoundIndex]}
+      ref={audioRef}
+      autoPlay={isPlaying}
+    />
+
+      <div> 
+        <button onClick={() => setIsPlaying(true)}>▶️</button>
+        <button onClick={() => setIsPlaying(false)}>⏸️</button>
+      </div>
     </div>
   );
 }
 
 export default App;
+
+
