@@ -1,6 +1,7 @@
 import './App.css';
 import { useState, useRef } from 'react';
-import ReactAudioPlayer from 'react-audio-player';
+
+import AudioVisualizer from "@tiagotrindade/audio-visualizer"
 import { PauseBtnFill, PlayBtnFill, Shuffle, Re, SkipBackward, SkipForward, PlayBtn } from 'react-bootstrap-icons';
 
 
@@ -32,11 +33,11 @@ function App() {
 
 
   // trigger the audio element's play/pause
-  if (audioRef.current?.audioEl?.current) {
+  if (audioRef.current?.current) {
     if (isPlaying) {
-      audioRef.current.audioEl.current?.play();
+      audioRef.current.current?.play();
     } else {
-      audioRef.current.audioEl.current?.pause();
+      audioRef.current.current?.pause();
     }
   }
 
@@ -64,12 +65,14 @@ function App() {
 
   return (
     <div className="App">
-      <ReactAudioPlayer
-        src={sounds[playingSoundIndex]}
-        ref={audioRef}
+      <audio 
         autoPlay={isPlaying}
-        onEnded={() => next()}
-      />
+        ref={audioRef} 
+        src={sounds[playingSoundIndex]} />
+      <div>
+        {/* TODO: Custom visualizer?? */}
+        <AudioVisualizer audio={audioRef} style={{ width: '25vh', height: '25vw'}} />
+      </div>
 
       <div>
         {isPlaying &&
@@ -80,7 +83,7 @@ function App() {
           <PlayBtnFill className='play button' onClick={() => setIsPlaying(!isPlaying)} />
         }
       </div>
-
+      
       <div className='control-row'>
         <SkipBackward className='button' onClick={() => {
           setIsPlaying(true);
