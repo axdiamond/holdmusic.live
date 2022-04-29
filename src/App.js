@@ -1,12 +1,26 @@
 import './App.css';
 import { useState, useRef } from 'react';
 import ReactAudioPlayer from 'react-audio-player';
-import { PauseBtnFill, PlayBtn, PlayBtnFill, Shuffle } from 'react-bootstrap-icons';
+import { PauseBtnFill, PlayBtnFill, Shuffle, Re, SkipBackward, SkipForward, PlayBtn } from 'react-bootstrap-icons';
+
+
+// https://stackoverflow.com/a/12646864
+function shuffleArray(array) {
+  for (let i = array.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [array[i], array[j]] = [array[j], array[i]];
+  }
+}
 
 function App() {
 
+  // "/sounds/SuperMarioBros.mp3",
+
+  let [playingSoundIndex, setplayingSoundIndex] = useState(0);
+  let [isPlaying, setIsPlaying] = useState(false);
+  const audioRef = useRef(null);
+
   let sounds = [
-    "/sounds/SuperMarioBros.mp3",
     "/sounds/ReturnOfTheLemmingShepards.mp3",
     "/sounds/TheCalling.wav",
     "/sounds/TheNymphaeum.wav",
@@ -14,15 +28,10 @@ function App() {
     "/sounds/WhatABeautifulSunset.wav",
   ];
 
-  function randomIndex(not) {
-    const selection = Math.floor(Math.random() * sounds.length - 1);
-    return selection == not ? randomIndex(not) : selection;
-  }
+  shuffleArray(sounds);
 
-  let [playingSoundIndex, setplayingSoundIndex] = useState(randomIndex());
-  let [isPlaying, setIsPlaying] = useState(false);
-  const audioRef = useRef(null);
 
+  // trigger the audio element's play/pause
   if (audioRef.current?.audioEl?.current) {
     if (isPlaying) {
       audioRef.current.audioEl.current?.play();
@@ -31,28 +40,64 @@ function App() {
     }
   }
 
+  const next = () => {
+    let newIndex = playingSoundIndex + 1;
+
+    if (newIndex > sounds.length - 1) {
+      setplayingSoundIndex(0);
+    }
+
+    setplayingSoundIndex(newIndex)
+  };
+
+
+  const back = () => {
+    let newIndex = playingSoundIndex - 1;
+
+    if (newIndex == -1) {
+      setplayingSoundIndex(sounds.length - 1);
+    } else {
+      setplayingSoundIndex(newIndex)
+    }
+  };
+
+
   return (
     <div className="App">
       <ReactAudioPlayer
         src={sounds[playingSoundIndex]}
         ref={audioRef}
         autoPlay={isPlaying}
-        onEnded={() => setplayingSoundIndex(playingSoundIndex + 1)}
+        onEnded={() => next()}
       />
-      <div>
-        <button className={isPlaying ? 'button' : 'play button'} onClick={() => setIsPlaying(!isPlaying)}> {isPlaying ? <PauseBtnFill /> : <PlayBtnFill />} </button>
+
+      {isPlaying &&
+        <PauseBtnFill className='button' onClick={() => setIsPlaying(!isPlaying)} />
+      }
+
+      {!isPlaying &&
+        <PlayBtnFill className='play button' onClick={() => setIsPlaying(!isPlaying)} />
+      }
+
+      <div className='control-row'>
+        <SkipBackward className='button' onClick={() => {
+          setIsPlaying(true);
+          next();
+        }} />
+
+        <Shuffle className='button' onClick={() => {
+          shuffleArray(sounds);
+          setIsPlaying(true);
+          next();
+        }} />
+
+        <SkipForward className='button' onClick={() => {
+          next();
+        }} />
       </div>
 
-      <button className='button' onClick={() => {
-        setplayingSoundIndex(playingSoundIndex + 1);
-        setIsPlaying(true);
-      }}>
-        <Shuffle />
-      </button>
     </div>
   );
 }
 
 export default App;
-
-
