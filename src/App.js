@@ -71,13 +71,15 @@ function App() {
         onEnded={() => next()}
       />
 
-      {isPlaying &&
-        <PauseBtnFill className='button' onClick={() => setIsPlaying(!isPlaying)} />
-      }
+      <div>
+        {isPlaying &&
+          <PauseBtnFill className='button' onClick={() => setIsPlaying(!isPlaying)} />
+        }
 
-      {!isPlaying &&
-        <PlayBtnFill className='play button' onClick={() => setIsPlaying(!isPlaying)} />
-      }
+        {!isPlaying &&
+          <PlayBtnFill className='play button' onClick={() => setIsPlaying(!isPlaying)} />
+        }
+      </div>
 
       <div className='control-row'>
         <SkipBackward className='button' onClick={() => {

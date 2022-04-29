@@ -1,11 +1,14 @@
 .App {
   text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .button {
   background: none;
   border: none;
-  font-size: 25vh;
+  font-size: 15vh;
   color: darkviolet;
 }
 
