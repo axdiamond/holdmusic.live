@@ -1,9 +1,10 @@
 import './App.css';
 import { useState, useRef } from 'react';
 import ReactAudioPlayer from 'react-audio-player';
+import { PauseBtnFill, PlayBtn, PlayBtnFill, Shuffle } from 'react-bootstrap-icons';
 
 function App() {
-  
+
   let sounds = [
     "/sounds/SuperMarioBros.mp3",
     "/sounds/ReturnOfTheLemmingShepards.mp3",
@@ -13,9 +14,12 @@ function App() {
     "/sounds/WhatABeautifulSunset.wav",
   ];
 
-  let randomStart = Math.floor(Math.random() * sounds.length - 1);
+  function randomIndex(not) {
+    const selection = Math.floor(Math.random() * sounds.length - 1);
+    return selection == not ? randomIndex(not) : selection;
+  }
 
-  let [playingSoundIndex, setplayingSoundIndex] = useState(randomStart);
+  let [playingSoundIndex, setplayingSoundIndex] = useState(randomIndex());
   let [isPlaying, setIsPlaying] = useState(false);
   const audioRef = useRef(null);
 
@@ -29,24 +33,22 @@ function App() {
 
   return (
     <div className="App">
-      <button onClick={() => { 
-          setplayingSoundIndex(playingSoundIndex + 1);
-          setIsPlaying(true);
-        }}>
-        Shuffle
-      </button>
-
-      
-    <ReactAudioPlayer
-      src={sounds[playingSoundIndex]}
-      ref={audioRef}
-      autoPlay={isPlaying}
-    />
-
-      <div> 
-        <button onClick={() => setIsPlaying(true)}>▶️</button>
-        <button onClick={() => setIsPlaying(false)}>⏸️</button>
+      <ReactAudioPlayer
+        src={sounds[playingSoundIndex]}
+        ref={audioRef}
+        autoPlay={isPlaying}
+        onEnded={() => setplayingSoundIndex(playingSoundIndex + 1)}
+      />
+      <div>
+        <button className={isPlaying ? 'button' : 'play button'} onClick={() => setIsPlaying(!isPlaying)}> {isPlaying ? <PauseBtnFill /> : <PlayBtnFill />} </button>
       </div>
+
+      <button className='button' onClick={() => {
+        setplayingSoundIndex(playingSoundIndex + 1);
+        setIsPlaying(true);
+      }}>
+        <Shuffle />
+      </button>
     </div>
   );
 }

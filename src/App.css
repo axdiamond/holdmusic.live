@@ -2,7 +2,40 @@
   text-align: center;
 }
 
-.volumeControl {
-  color: red;
+.button {
+  background: none;
+  border: none;
+  font-size: 25vh;
+  color: darkviolet;
 }
+
+.button:active {
+  transform: scale(0.98);
+}
+
+.play {
+  animation-name: wiggle;
+  animation-duration: 2s;
+  animation-iteration-count: infinite;
+  animation-fill-mode: forwards;
+}
+
+.play:hover  {
+  animation-name: fastwiggle;
+  animation-timing-function: cubic-bezier(0.645, 0.045, 0.355, 1);
+  animation-duration: .5s;
+}
+
+@keyframes wiggle {
+  from { transform: rotate(0deg); } 
+  33% { transform: rotate(10deg); } 
+  66% { transform: rotate(-10deg); } 
+  to { transform: rotate(0deg); } 
+} 
+
+@keyframes fastwiggle {
+  from { transform: rotate(10deg); } 
+  50% { transform: rotate(-10deg); } 
+  to { transform: rotate(10deg); } 
+} 
 
