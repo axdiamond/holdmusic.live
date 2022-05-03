@@ -19,6 +19,7 @@ function App() {
 
   let [playingSoundIndex, setplayingSoundIndex] = useState(0);
   let [isPlaying, setIsPlaying] = useState(false);
+  let [hasPlayed, setHasPlayed] = useState(false);
   let [canPlay, setCanPlay] = useState(false);
   const audioRef = useRef(null);
 
@@ -33,12 +34,11 @@ function App() {
 
   useEffect(() => {
     shuffleArray(sounds);
-  })
+  });
 
   // trigger the audio element's play/pause
   if (isPlaying && canPlay) {
     audioRef?.current?.audioEl.current.play();
-    
   } else {
     audioRef?.current?.audioEl.current.pause();
   }
@@ -88,31 +88,36 @@ function App() {
         }
 
         {!isPlaying &&
-          <PlayBtnFill className='play button' onClick={() => setIsPlaying(!isPlaying)} />
+          <PlayBtnFill className='play button' onClick={() => {
+            setIsPlaying(!isPlaying);
+            setHasPlayed(true);
+          }
+        } />
         }
       </div>
 
-      {isPlaying && <div className='control-row'>
-        <SkipBackward className='button' onClick={() => {
-          setIsPlaying(true);
-          back();
-        }} />
+      {hasPlayed && <>
+        <div className='control-row'>
+          <SkipBackward className='button' onClick={() => {
+            setIsPlaying(true);
+            back();
+          }} />
 
-        <Shuffle className='button' onClick={() => {
-          shuffleArray(sounds);
-          setIsPlaying(true);
-          next();
-        }} />
+          <Shuffle className='button' onClick={() => {
+            shuffleArray(sounds);
+            setIsPlaying(true);
+            next();
+          }} />
 
-        <SkipForward className='button' onClick={() => {
-          next();
-        }} />
-      </div>
-      }
-      {isPlaying && <div className='attribution'>
-        <div className="title">{playingSong.title}</div>
-        <div className="artist" >{playingSong.artist}</div>
-      </div>
+          <SkipForward className='button' onClick={() => {
+            next();
+          }} />
+        </div>
+        <div className='attribution'>
+          <div className="title">{playingSong.title}</div>
+          <div className="artist" >{playingSong.artist}</div>
+        </div>
+      </>
       }
     </div>
   );
