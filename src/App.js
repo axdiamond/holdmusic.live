@@ -3,6 +3,7 @@ import { useState, useRef, useEffect } from 'react';
 import ReactAudioPlayer from 'react-audio-player';
 import AudioVisualizer from "@tiagotrindade/audio-visualizer"
 import { PauseBtnFill, PlayBtnFill, Shuffle, Re, SkipBackward, SkipForward, PlayBtn } from 'react-bootstrap-icons';
+import { SpinnerDotted } from 'spinners-react';
 
 
 // https://stackoverflow.com/a/12646864
@@ -43,7 +44,6 @@ function App() {
     audioRef?.current?.audioEl.current.pause();
   }
   
-
   const next = () => {
     let newIndex = playingSoundIndex + 1;
 
@@ -83,7 +83,10 @@ function App() {
         onCanPlayThrough={() => setCanPlay(true)}
       />
       <div className='control-row'>
-        {isPlaying &&
+        {isPlaying && !canPlay && 
+          <SpinnerDotted color='rgb(156, 19, 219)' size="10vw"/>
+        }
+        {isPlaying && canPlay && 
           <PauseBtnFill className='button' onClick={() => setIsPlaying(!isPlaying)} />
         }
 
