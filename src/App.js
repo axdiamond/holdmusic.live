@@ -1,6 +1,6 @@
 import './App.css';
 import { useState, useRef } from 'react';
-
+import ReactAudioPlayer from 'react-audio-player';
 import AudioVisualizer from "@tiagotrindade/audio-visualizer"
 import { PauseBtnFill, PlayBtnFill, Shuffle, Re, SkipBackward, SkipForward, PlayBtn } from 'react-bootstrap-icons';
 
@@ -65,15 +65,11 @@ function App() {
 
   return (
     <div className="App">
-      <audio 
+      <ReactAudioPlayer
+        src={sounds[playingSoundIndex]}
         autoPlay={isPlaying}
-        ref={audioRef} 
-        src={sounds[playingSoundIndex]} />
-      <div>
-        {/* TODO: Custom visualizer?? */}
-        {/* <AudioVisualizer audio={audioRef} style={{ width: '25vh', height: '25vw'}} /> */}
-      </div>
-
+        ref={audioRef}
+      />
       <div>
         {isPlaying &&
           <PauseBtnFill className='button' onClick={() => setIsPlaying(!isPlaying)} />
@@ -84,7 +80,7 @@ function App() {
         }
       </div>
       
-      <div className='control-row'>
+      {isPlaying && <div className='control-row'>
         <SkipBackward className='button' onClick={() => {
           setIsPlaying(true);
           next();
@@ -100,8 +96,9 @@ function App() {
           next();
         }} />
       </div>
+    }
 
-    </div>
+    </div> 
   );
 }
 
