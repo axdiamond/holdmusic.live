@@ -19,6 +19,7 @@ function App() {
 
   let [playingSoundIndex, setplayingSoundIndex] = useState(0);
   let [isPlaying, setIsPlaying] = useState(false);
+  let [canPlay, setCanPlay] = useState(false);
   const audioRef = useRef(null);
 
   // Thank you to https://www.freemusicpublicdomain.com/royalty-free-on-hold-music/
@@ -35,13 +36,13 @@ function App() {
   })
 
   // trigger the audio element's play/pause
-  if (audioRef.current?.current) {
-    if (isPlaying) {
-      audioRef.current.current?.play();
-    } else {
-      audioRef.current.current?.pause();
-    }
+  if (isPlaying && canPlay) {
+    audioRef?.current?.audioEl.current.play();
+    
+  } else {
+    audioRef?.current?.audioEl.current.pause();
   }
+  
 
   const next = () => {
     let newIndex = playingSoundIndex + 1;
@@ -79,6 +80,7 @@ function App() {
         autoPlay={isPlaying}
         preload="auto"
         ref={audioRef}
+        onCanPlayThrough={() => setCanPlay(true)}
       />
       <div className='control-row'>
         {isPlaying &&
