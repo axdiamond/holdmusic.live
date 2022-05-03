@@ -67,9 +67,17 @@ function App() {
 
   return (
     <div className="App">
+
+      {/* preload all songs */}
+      <audio preload="auto">
+        {sounds.map(song =>
+          <source key={song.src} src={song.src} />)}
+      </audio>
+
       <ReactAudioPlayer
         src={playingSong.src}
         autoPlay={isPlaying}
+        preload="auto"
         ref={audioRef}
       />
       <div className='control-row'>
