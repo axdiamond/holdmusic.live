@@ -18,7 +18,7 @@ function App() {
   // "/sounds/SuperMarioBros.mp3",
 
   let [playingSoundIndex, setplayingSoundIndex] = useState(0);
-  let [isPlaying, setIsPlaying] = useState(true);
+  let [isPlaying, setIsPlaying] = useState(false);
   const audioRef = useRef(null);
 
   // Thank you to https://www.freemusicpublicdomain.com/royalty-free-on-hold-music/
