@@ -1,5 +1,5 @@
 import './App.css';
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import ReactAudioPlayer from 'react-audio-player';
 import AudioVisualizer from "@tiagotrindade/audio-visualizer"
 import { PauseBtnFill, PlayBtnFill, Shuffle, Re, SkipBackward, SkipForward, PlayBtn } from 'react-bootstrap-icons';
@@ -18,19 +18,21 @@ function App() {
   // "/sounds/SuperMarioBros.mp3",
 
   let [playingSoundIndex, setplayingSoundIndex] = useState(0);
-  let [isPlaying, setIsPlaying] = useState(false);
+  let [isPlaying, setIsPlaying] = useState(true);
   const audioRef = useRef(null);
 
+  // Thank you to https://www.freemusicpublicdomain.com/royalty-free-on-hold-music/
   let sounds = [
-    "/sounds/ReturnOfTheLemmingShepards.mp3",
-    "/sounds/TheCalling.wav",
-    "/sounds/TheNymphaeum.wav",
-    "/sounds/UrbanSunrise.mp3",
-    "/sounds/WhatABeautifulSunset.wav",
+    { src: "/sounds/ReturnOfTheLemmingShepards.mp3", title: "Return of the Lemming Shepherds", artist: "The Lemming Shepherds" },
+    { src: "/sounds/TheCalling.wav", title: "The Calling", artist: "Angelwing" },
+    { src: "/sounds/TheNymphaeum.wav", title: "The Nymphaeum (Part I & II)", artist: "Angelwing" },
+    { src: "/sounds/UrbanSunrise.mp3", title: "Urban Sunrise", artist: "Steve Bass" },
+    { src: "/sounds/WhatABeautifulSunset.wav", title: "What a beautiful Sunset!", artist: "Angelwing" },
   ];
 
-  shuffleArray(sounds);
-
+  useEffect(() => {
+    shuffleArray(sounds);
+  })
 
   // trigger the audio element's play/pause
   if (audioRef.current?.current) {
@@ -46,11 +48,10 @@ function App() {
 
     if (newIndex > sounds.length - 1) {
       setplayingSoundIndex(0);
+    } else {
+      setplayingSoundIndex(newIndex);
     }
-
-    setplayingSoundIndex(newIndex)
   };
-
 
   const back = () => {
     let newIndex = playingSoundIndex - 1;
@@ -58,19 +59,20 @@ function App() {
     if (newIndex == -1) {
       setplayingSoundIndex(sounds.length - 1);
     } else {
-      setplayingSoundIndex(newIndex)
+      setplayingSoundIndex(newIndex);
     }
   };
 
+  let playingSong = sounds[playingSoundIndex];
 
   return (
     <div className="App">
       <ReactAudioPlayer
-        src={sounds[playingSoundIndex]}
+        src={playingSong.src}
         autoPlay={isPlaying}
         ref={audioRef}
       />
-      <div>
+      <div className='control-row'>
         {isPlaying &&
           <PauseBtnFill className='button' onClick={() => setIsPlaying(!isPlaying)} />
         }
@@ -79,11 +81,11 @@ function App() {
           <PlayBtnFill className='play button' onClick={() => setIsPlaying(!isPlaying)} />
         }
       </div>
-      
+
       {isPlaying && <div className='control-row'>
         <SkipBackward className='button' onClick={() => {
           setIsPlaying(true);
-          next();
+          back();
         }} />
 
         <Shuffle className='button' onClick={() => {
@@ -96,9 +98,13 @@ function App() {
           next();
         }} />
       </div>
-    }
-
-    </div> 
+      }
+      {isPlaying && <div className='attribution'>
+        <div className="title">{playingSong.title}</div>
+        <div className="artist" >{playingSong.artist}</div>
+      </div>
+      }
+    </div>
   );
 }
 

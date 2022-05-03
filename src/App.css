@@ -8,7 +8,7 @@
 .button {
   background: none;
   border: none;
-  font-size: 15vh;
+  font-size: 15vw;
   color: darkviolet;
 }
 
@@ -26,8 +26,29 @@
 }
 
 .control-row > * {
+  width: 20vw;
   padding-left: 15px;
   padding-right: 15px;
+}
+
+.attribution {
+  width: 100vw;
+  margin-top: 2vw;
+  padding-top: 1vw;
+  padding-bottom: 1vw;
+  background-color: rgba(137, 43, 226, 0.699);
+}
+
+.artist, .title {
+  font-family: fantasy;
+}
+
+.artist {
+  font-size: 2vw;
+}
+
+.title {
+  font-size: 4vw;
 }
 
 .play {
@@ -37,28 +58,64 @@
   animation-fill-mode: forwards;
 }
 
-.play:hover  {
+.play:hover {
   animation-name: fastwiggle;
   animation-timing-function: cubic-bezier(0.645, 0.045, 0.355, 1);
   animation-duration: .5s;
 }
 
 @keyframes wiggle {
-  from { transform: rotate(0deg); } 
-  10% { transform: rotate(5deg); } 
-  20% { transform: rotate(-5deg); } 
-  30% { transform: rotate(10deg); } 
-  40% { transform: rotate(-10deg); } 
-  50% { transform: rotate(10deg); } 
-  60% { transform: rotate(-10deg); } 
-  70% { transform: rotate(5deg); } 
-  80% { transform: rotate(0deg); } 
-  to { transform: rotate(0deg); } 
-} 
+  from {
+    transform: rotate(0deg);
+  }
+
+  10% {
+    transform: rotate(5deg);
+  }
+
+  20% {
+    transform: rotate(-5deg);
+  }
+
+  30% {
+    transform: rotate(10deg);
+  }
+
+  40% {
+    transform: rotate(-10deg);
+  }
+
+  50% {
+    transform: rotate(10deg);
+  }
+
+  60% {
+    transform: rotate(-10deg);
+  }
+
+  70% {
+    transform: rotate(5deg);
+  }
+
+  80% {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(0deg);
+  }
+}
 
 @keyframes fastwiggle {
-  from { transform: rotate(10deg); } 
-  50% { transform: rotate(-10deg); } 
-  to { transform: rotate(10deg); } 
-} 
+  from {
+    transform: rotate(10deg);
+  }
 
+  50% {
+    transform: rotate(-10deg);
+  }
+
+  to {
+    transform: rotate(10deg);
+  }
+}
